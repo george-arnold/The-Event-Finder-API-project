@@ -15,18 +15,22 @@
     .then(responseJson => console.log(responseJson))
     .catch(error => alert('Something went wrong. Try again later.'));
  }
- function snakeState(state) {
+
+ function abbrToSnakeCase(state) {
 //state should arrive in abbreviated form, and output as snake_case
 //create object for conversions
-let abbrToSnakeObject ={
-    AZ: 'Arizona',
-AL: 'Alabama',
-AK: 'Alaska',
-AR: 'Arkansas',
-CA: 'California',
-CO: 'Colorado',
-CT: 'Connecticut',
-DC: 'district_of Columbia',
+//take find key that matches abbreviation, return value assocaited with that key to a variable
+//that will be used in getBreweryInfo
+
+let abbrKeys ={
+AZ: 'arizona',
+AL: 'alabama',
+AK: 'alaska',
+AR: 'arkansas',
+CA: 'california',
+CO: 'colorado',
+CT: 'connecticut',
+DC: 'district_of_columbia',
 DE: 'delaware',
 FL: 'florida',
 GA: 'georgia',
@@ -71,13 +75,19 @@ WV: 'west_virginia',
 WI: 'wisconsin',
 WY: 'wyoming' 
 }
-
-// 
+let stateKeys = Object.keys(abbrKeys); //get keys from object as an array
+let stateInSnakeCase;
+stateKeys.forEach(function(key) { //loop through keys array
+  if(key===state){
+  stateInSnakeCase= (abbrKeys[key]);
+  }
+});
+return stateInSnakeCase;
  }
 function getBreweryInfo() {
   //takes abbreviated value from HTML and converts it to snake_case which breweryDB needs
-  // snakeState($('#state-input'))
-  fetch( 'https://api.openbrewerydb.org/breweries?by_state=district_of_columbia')
+  let stateForBrew= abbrToSnakeCase($('#state-input').val());
+  fetch( 'https://api.openbrewerydb.org/breweries?by_state='+ stateForBrew)
     .then(response => response.json())
     .then(responseJson => console.log(responseJson))
     .catch(error => alert('Something went wrong. Try again later.'));
