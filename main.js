@@ -70,7 +70,7 @@ function abbrToSnakeCase(state) {
     WI: 'wisconsin',
     WY: 'wyoming' 
     }
-  //get keys from object as an array
+  //get keys from object
   let stateKeys = Object.keys(abbrKeys);
   let stateInSnakeCase;
   //loop through keys array and if the key matches the argument (state) passed in, return its value
@@ -88,13 +88,15 @@ function appendBrewInfo(response) {
   $('#ul-options').empty();  
   $('#h1-options').text(`Brewery Options`)
   //append names of each brewery to display
-  response.forEach(element=> 
-    $('#ul-options').append(`<li class="brew-li">${element.name}</li>`),
-  );
+
+  for (let i=0; i< response.length;i++){
+    $('#ul-options').append(`<li val=${i} class="brew-li">${response[i].name}</li>`);
+ }
 
   $('#ul-options').on('click','.brew-li', function() {
     //click on li and get more information about that brewery
-  $('#details-div').append(`<div><ul><li> This should be more info about the brewery that was clicked</li> </ul></div>`)
+    alert($(this).val());
+  // $('#details-div').append(`<div><ul><li> This should be more info about the brewery that was clicked</li> </ul></div>`)
   });
   
 }
