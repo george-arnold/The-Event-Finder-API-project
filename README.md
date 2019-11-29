@@ -1,1 +1,1 @@
-# league-analyzer-API-project
+The event finder api project
