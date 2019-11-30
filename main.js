@@ -8,16 +8,18 @@ function displayTicketMasterInfo(response) {
   //append names of each brewery to display
   console.log(response);
   response.forEach((event, index) => {
-    if (event.info===undefined) {
-      event.info= "No additional information was provided by the event manager";
+    if (event.info === undefined) {
+      event.info = 'No additional information was provided by the event manager';
     }
-    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${event.name}, Date: ${event.dates.start.localDate}</li>`),
+    $('#ul-options').append(
+      `<li id="display-${index}" class="brew-li">${event.name}, Date: ${event.dates.start.localDate}</li>`
+    ),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
       $('#ul-options').on('click', '#display-' + index, function() {
         const venue = event._embedded.venues[0];
         // remove spaces and add + so that google maps link will function correctly
-        const streetAddressVenue = venue.address.line1.split(" ").join("+");
-        const venueCity = venue.city.name.split(" ").join("+");
+        const streetAddressVenue = venue.address.line1.split(' ').join('+');
+        const venueCity = venue.city.name.split(' ').join('+');
         $('#details-div').empty();
         $('#details-div').append(`<div><ul> <li>${event.name}</li>
         <li>Date: ${event.dates.start.localDate}</li>
@@ -25,7 +27,7 @@ function displayTicketMasterInfo(response) {
         <li><a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddressVenue}%2C+${venueCity}"> 
         ${venue.address.line1}, ${venue.city.name}, ${venue.state.name}</a></li>
         <li>${event.info}</li>
-        <li><a href="${event.url}">${event.url}</a></li></ul></div>`)
+        <li><a href="${event.url}">${event.url}</a></li></ul></div>`);
       });
   });
 }
@@ -121,23 +123,22 @@ function displayBrewInfo(response) {
   $('#h1-options').text(`Options`);
   //append names of each brewery to display
   response.forEach((brewery, index) => {
-  // add an if statement so the breweries only post to the page if they have a street address stored in API
-    if (brewery.street === "") {
-
+    // add an if statement so the breweries only post to the page if they have a street address stored in API
+    if (brewery.street === '') {
     } else {
-    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${brewery.name}</li>`),
-      // add click listener that allows us to get additional information about each <li> by clicking on each <li>
-      $('#ul-options').on('click', '#display-' + index, function() {
-        $('#details-div').empty();
-        let streetAddress = brewery.street.split(' ').join('+');
-        let brewCity= brewery.city.split(' ').join('+');
-        $('#details-div').append(`<div><ul><li>${brewery.name}</li>
+      $('#ul-options').append(`<li id="display-${index}" class="brew-li">${brewery.name}</li>`),
+        // add click listener that allows us to get additional information about each <li> by clicking on each <li>
+        $('#ul-options').on('click', '#display-' + index, function() {
+          $('#details-div').empty();
+          let streetAddress = brewery.street.split(' ').join('+');
+          let brewCity = brewery.city.split(' ').join('+');
+          $('#details-div').append(`<div><ul><li>${brewery.name}</li>
         <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
         ${brewery.street}, ${brewery.city}, ${brewery.state}</a></li>
       <li>${brewery.brewery_type} brewery </li>
       <li><a href="${brewery.website_url}">${brewery.website_url}</a></li>
       </ul></div>`);
-      });
+        });
     }
   });
 }
@@ -150,8 +151,6 @@ function getBreweryInfo() {
     .then(responseJson => displayBrewInfo(responseJson))
     .catch(error => alert('Something went wrong. Try again later.'));
 }
-
-
 
 function submitForm() {
   $('main').addClass('hidden');
