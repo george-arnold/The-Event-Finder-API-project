@@ -3,22 +3,21 @@
 
 function displayTicketMasterInfo(response) {
   //clear out for each load
-  $('#h1-options').empty();
-  $('#ul-options').empty();
+
   $('#h1-options').text(`Options`);
   //append names of each brewery to display
-  for (let i = 0; i < response.length; i++) {
+  response.forEach((event, index) => {
     console.log(response);
-    $('#ul-options').append(`<li id="display-${i}" class="brew-li">${response[i].name}</li>`),
+    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${event.name}</li>`),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
-      $('#ul-options').on('click', '#display-' + i, function() {
-        const venue = response[i]._embedded.venues[0];
+      $('#ul-options').on('click', '#display-' + index, function() {
+        const venue = event._embedded.venues[0];
         $('#details-div').empty();
         $('#details-div').append(
           `<div><ul><li> ${venue.city.name}, ${venue.state.name}</li></ul></div>`
         );
       });
-  }
+  });
 }
 
 function getTickerMasterInfo() {
