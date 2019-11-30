@@ -3,40 +3,45 @@
 
 function displayTicketMasterInfo(response) {
   //clear out for each load
-  $('#h1-options').empty();  
-  $('#ul-options').empty();  
-  $('#h1-options').text(`Options`)
+  $('#h1-options').empty();
+  $('#ul-options').empty();
+  $('#h1-options').text(`Options`);
   //append names of each brewery to display
-  for (let i=0; i< response.length;i++){
+  for (let i = 0; i < response.length; i++) {
     console.log(response);
     $('#ul-options').append(`<li id="display-${i}" class="brew-li">${response[i].name}</li>`),
-  // add click listener that allows us to get additional information about each <li> by clicking on each <li>
-    $('#ul-options').on('click','#display-'+i, function() {
-      $('#details-div').empty();
-      $('#details-div').append(`<div><ul><li> ${response[i]._embedded.venues[0].city.name}, ${response[i]._embedded.venues[0].state.name}</li></ul></div>`)
-    });
- }
+      // add click listener that allows us to get additional information about each <li> by clicking on each <li>
+      $('#ul-options').on('click', '#display-' + i, function() {
+        $('#details-div').empty();
+        $('#details-div').append(
+          `<div><ul><li> ${response[i]._embedded.venues[0].city.name}, ${response[i]._embedded.venues[0].state.name}</li></ul></div>`
+        );
+      });
+  }
 }
 
-
 function getTickerMasterInfo() {
-  let stateInput=$('#state-input').val();
-  let classificationInput=$('#event-type').val();
-  fetch( 'https://app.ticketmaster.com/discovery/v2/events.json?classificationName='+classificationInput+'&stateCode='+ stateInput +'&apikey=76Zf3JwGB3xHicLavAierYO8jXLKpnL3')
+  let stateInput = $('#state-input').val();
+  let classificationInput = $('#event-type').val();
+  fetch(
+    'https://app.ticketmaster.com/discovery/v2/events.json?classificationName=' +
+      classificationInput +
+      '&stateCode=' +
+      stateInput +
+      '&apikey=76Zf3JwGB3xHicLavAierYO8jXLKpnL3'
+  )
     .then(response => response.json())
     .then(responseJson => displayTicketMasterInfo(responseJson._embedded.events))
     .catch(error => alert('Something went wrong. Try again later.'));
- }
-
+}
 
 //Brewery API Information
 
 //translates abbreviated state values to snake_case for brewery API
 //Ticketmaster API requires abbreviations, Brewery API requires snake
 function abbrToSnakeCase(state) {
-
   //store abbreviation keys in an object with snake_case conversions
-  let abbrKeys ={
+  let abbrKeys = {
     AZ: 'arizona',
     AL: 'alabama',
     AK: 'alaska',
@@ -87,44 +92,43 @@ function abbrToSnakeCase(state) {
     WA: 'washington',
     WV: 'west_virginia',
     WI: 'wisconsin',
-    WY: 'wyoming' 
-    }
+    WY: 'wyoming'
+  };
   //get keys from object
   let stateKeys = Object.keys(abbrKeys);
   let stateInSnakeCase;
   //loop through keys array and if the key matches the argument (state) passed in, return its value
-  stateKeys.forEach(function(key) { 
-    if(key===state){
-    stateInSnakeCase= (abbrKeys[key]);
+  stateKeys.forEach(function(key) {
+    if (key === state) {
+      stateInSnakeCase = abbrKeys[key];
     }
   });
   return stateInSnakeCase;
- }
+}
 
-
- function displayBrewInfo(response) {
+function displayBrewInfo(response) {
   //clear out for each load
-  $('#h1-options').empty();  
-  $('#ul-options').empty();  
-  $('#h1-options').text(`Options`)
+  $('#h1-options').empty();
+  $('#ul-options').empty();
+  $('#h1-options').text(`Options`);
   //append names of each brewery to display
-  for (let i=0; i< response.length;i++){
+  for (let i = 0; i < response.length; i++) {
     console.log(response);
     $('#ul-options').append(`<li id="display-${i}" class="brew-li">${response[i].name}</li>`),
-  // add click listener that allows us to get additional information about each <li> by clicking on each <li>
-    $('#ul-options').on('click','#display-'+i, function() {
-      $('#details-div').empty();
-      $('#details-div').append(`<div><ul><li> ${response[i].city}, ${response[i].state}</li>
+      // add click listener that allows us to get additional information about each <li> by clicking on each <li>
+      $('#ul-options').on('click', '#display-' + i, function() {
+        $('#details-div').empty();
+        $('#details-div').append(`<div><ul><li> ${response[i].city}, ${response[i].state}</li>
       <li>${response[i].brewery_type} brewery </li>
-      <li>${response[i].website_url}</ul></div>`)
-    });
- }
+      <li>${response[i].website_url}</ul></div>`);
+      });
+  }
 }
 
 function getBreweryInfo() {
   //takes abbreviated value from HTML and converts it to snake_case which breweryDB needs
-  let stateForBrew= abbrToSnakeCase($('#state-input').val());
-  fetch( 'https://api.openbrewerydb.org/breweries?by_state='+ stateForBrew)
+  let stateForBrew = abbrToSnakeCase($('#state-input').val());
+  fetch('https://api.openbrewerydb.org/breweries?by_state=' + stateForBrew)
     .then(response => response.json())
     .then(responseJson => displayBrewInfo(responseJson))
     .catch(error => alert('Something went wrong. Try again later.'));
@@ -138,7 +142,7 @@ function getBreweryInfo() {
 //   submitForm();
 // }
 
-function submitForm(){
+function submitForm() {
   $('main').addClass('hidden');
   console.log($('#event-type'));
   if ($('#event-type').val() === 'random') {
