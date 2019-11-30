@@ -6,14 +6,26 @@ function displayTicketMasterInfo(response) {
 
   $('#h1-options').text(`Options`);
   //append names of each brewery to display
+  console.log(response);
   response.forEach((event, index) => {
-    console.log(response);
-    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${event.name}</li>`),
+    if (event.info===undefined) {
+      event.info= "No additional information was provided by the event manager";
+    }
+    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${event.name}, Date: ${event.dates.start.localDate}</li>`),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
       $('#ul-options').on('click', '#display-' + index, function() {
         const venue = event._embedded.venues[0];
+        // remove spaces and add + so that google maps link will function correctly
+        const streetAddressVenue = venue.address.line1.split(" ").join("+");
+        const venueCity = venue.city.name.split(" ").join("+");
         $('#details-div').empty();
-        $('#details-div').append(`<div><ul><li> ${venue.city.name}, ${venue.state.name}</li></ul></div>`);
+        $('#details-div').append(`<div><ul> <li>${event.name}</li>
+        <li>Date: ${event.dates.start.localDate}</li>
+        <li> ${venue.name} </li>
+        <li><a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddressVenue}%2C+${venueCity}"> 
+        ${venue.address.line1}, ${venue.city.name}, ${venue.state.name}</a></li>
+        <li>${event.info}</li>
+        <li><a href="${event.url}">${event.url}</a></li></ul></div>`)
       });
   });
 }
@@ -120,10 +132,10 @@ function displayBrewInfo(response) {
         let streetAddress = brewery.street.split(' ').join('+');
         let brewCity= brewery.city.split(' ').join('+');
         $('#details-div').append(`<div><ul><li>${brewery.name}</li>
-       <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">${brewery.street}</li>
-        <li> ${brewery.city}, ${brewery.state}</li></a>
+        <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
+        ${brewery.street}, ${brewery.city}, ${brewery.state}</a></li>
       <li>${brewery.brewery_type} brewery </li>
-      <li><a href="${brewery.website_url}">Website</a></li>
+      <li><a href="${brewery.website_url}">${brewery.website_url}</a></li>
       </ul></div>`);
       });
     }
@@ -139,19 +151,12 @@ function getBreweryInfo() {
     .catch(error => alert('Something went wrong. Try again later.'));
 }
 
-//low priority
 
-// function randomEvent (){
-//   //change the value of one of them to random
-//   submitForm();
-// }
 
 function submitForm() {
   $('main').addClass('hidden');
   console.log($('#event-type'));
-  if ($('#event-type').val() === 'random') {
-    randomEvent();
-  } else if ($('#event-type').val() === 'visit-breweries') {
+  if ($('#event-type').val() === 'visit-breweries') {
     getBreweryInfo();
   } else {
     getTickerMasterInfo();
