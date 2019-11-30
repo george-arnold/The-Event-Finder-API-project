@@ -1,16 +1,35 @@
 // Access API
 'use strict';
 
+function displayTicketMasterInfo(response) {
+  //clear out for each load
+  $('#h1-options').empty();  
+  $('#ul-options').empty();  
+  $('#h1-options').text(`Options`)
+  //append names of each brewery to display
+  for (let i=0; i< response.length;i++){
+    console.log(response);
+    $('#ul-options').append(`<li id="display-${i}" class="brew-li">${response[i].name}</li>`),
+  // add click listener that allows us to get additional information about each <li> by clicking on each <li>
+    $('#ul-options').on('click','#display-'+i, function() {
+      $('#details-div').empty();
+      $('#details-div').append(`<div><ul><li> ${response[i]._embedded.venues[0].city.name}, ${response[i]._embedded.venues[0].state.name}</li></ul></div>`)
+    });
+ }
+}
 
-// this will take in info for Music/Sports/Film
-// function getTickerMasterInfo() {
-//   let stateInput=$('#state-input').val();
-//   let classificationInput=$('#event-type').val();
-//   fetch( 'https://app.ticketmaster.com/discovery/v2/events.json?classificationName='+classificationInput+'&stateCode='+ stateInput +'&apikey=76Zf3JwGB3xHicLavAierYO8jXLKpnL3')
-//     .then(response => response.json())
-//     .then(responseJson => console.log(responseJson))
-//     .catch(error => alert('Something went wrong. Try again later.'));
-//  }
+
+function getTickerMasterInfo() {
+  let stateInput=$('#state-input').val();
+  let classificationInput=$('#event-type').val();
+  fetch( 'https://app.ticketmaster.com/discovery/v2/events.json?classificationName='+classificationInput+'&stateCode='+ stateInput +'&apikey=76Zf3JwGB3xHicLavAierYO8jXLKpnL3')
+    .then(response => response.json())
+    .then(responseJson => displayTicketMasterInfo(responseJson._embedded.events))
+    .catch(error => alert('Something went wrong. Try again later.'));
+ }
+
+
+//Brewery API Information
 
 //translates abbreviated state values to snake_case for brewery API
 //Ticketmaster API requires abbreviations, Brewery API requires snake
@@ -82,23 +101,24 @@ function abbrToSnakeCase(state) {
   return stateInSnakeCase;
  }
 
-function appendBrewInfo(response) {
-  console.log(response);
+
+ function displayBrewInfo(response) {
+  //clear out for each load
   $('#h1-options').empty();  
   $('#ul-options').empty();  
-  $('#h1-options').text(`Brewery Options`)
+  $('#h1-options').text(`Options`)
   //append names of each brewery to display
-
   for (let i=0; i< response.length;i++){
-    $('#ul-options').append(`<li val=${i} class="brew-li">${response[i].name}</li>`);
+    console.log(response);
+    $('#ul-options').append(`<li id="display-${i}" class="brew-li">${response[i].name}</li>`),
+  // add click listener that allows us to get additional information about each <li> by clicking on each <li>
+    $('#ul-options').on('click','#display-'+i, function() {
+      $('#details-div').empty();
+      $('#details-div').append(`<div><ul><li> ${response[i].city}, ${response[i].state}</li>
+      <li>${response[i].brewery_type} brewery </li>
+      <li>${response[i].website_url}</ul></div>`)
+    });
  }
-
-  $('#ul-options').on('click','.brew-li', function() {
-    //click on li and get more information about that brewery
-    alert($(this).val());
-  // $('#details-div').append(`<div><ul><li> This should be more info about the brewery that was clicked</li> </ul></div>`)
-  });
-  
 }
 
 function getBreweryInfo() {
@@ -106,7 +126,7 @@ function getBreweryInfo() {
   let stateForBrew= abbrToSnakeCase($('#state-input').val());
   fetch( 'https://api.openbrewerydb.org/breweries?by_state='+ stateForBrew)
     .then(response => response.json())
-    .then(responseJson => appendBrewInfo(responseJson))
+    .then(responseJson => displayBrewInfo(responseJson))
     .catch(error => alert('Something went wrong. Try again later.'));
 }
 
@@ -125,10 +145,10 @@ function submitForm(){
     randomEvent();
   } else if ($('#event-type').val() === 'visit-breweries') {
     getBreweryInfo();
-
   } else {
-    getTickerMasterInfo();}
+    getTickerMasterInfo();
   }
+}
 
 function watchForm() {
   $('form').submit(event => {
