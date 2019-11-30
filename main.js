@@ -13,9 +13,7 @@ function displayTicketMasterInfo(response) {
       $('#ul-options').on('click', '#display-' + index, function() {
         const venue = event._embedded.venues[0];
         $('#details-div').empty();
-        $('#details-div').append(
-          `<div><ul><li> ${venue.city.name}, ${venue.state.name}</li></ul></div>`
-        );
+        $('#details-div').append(`<div><ul><li> ${venue.city.name}, ${venue.state.name}</li></ul></div>`);
       });
   });
 }
@@ -107,22 +105,19 @@ function abbrToSnakeCase(state) {
 }
 
 function displayBrewInfo(response) {
-  //clear out for each load
-  $('#h1-options').empty();
-  $('#ul-options').empty();
   $('#h1-options').text(`Options`);
   //append names of each brewery to display
-  for (let i = 0; i < response.length; i++) {
+  response.forEach((event, index) => {
     console.log(response);
-    $('#ul-options').append(`<li id="display-${i}" class="brew-li">${response[i].name}</li>`),
+    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${event.name}</li>`),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
-      $('#ul-options').on('click', '#display-' + i, function() {
+      $('#ul-options').on('click', '#display-' + index, function() {
         $('#details-div').empty();
-        $('#details-div').append(`<div><ul><li> ${response[i].city}, ${response[i].state}</li>
-      <li>${response[i].brewery_type} brewery </li>
-      <li>${response[i].website_url}</ul></div>`);
+        $('#details-div').append(`<div><ul><li> ${event.city}, ${event.state}</li>
+      <li>${event.brewery_type} brewery </li>
+      <li>${event.website_url}</ul></div>`);
       });
-  }
+  });
 }
 
 function getBreweryInfo() {
@@ -138,7 +133,6 @@ function getBreweryInfo() {
 
 // function randomEvent (){
 //   //change the value of one of them to random
-
 //   submitForm();
 // }
 
