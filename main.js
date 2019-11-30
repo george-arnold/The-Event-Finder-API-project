@@ -12,9 +12,10 @@ function displayTicketMasterInfo(response) {
     $('#ul-options').append(`<li id="display-${i}" class="brew-li">${response[i].name}</li>`),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
       $('#ul-options').on('click', '#display-' + i, function() {
+        const venue = response[i]._embedded.venues[0];
         $('#details-div').empty();
         $('#details-div').append(
-          `<div><ul><li> ${response[i]._embedded.venues[0].city.name}, ${response[i]._embedded.venues[0].state.name}</li></ul></div>`
+          `<div><ul><li> ${venue.city.name}, ${venue.state.name}</li></ul></div>`
         );
       });
   }
