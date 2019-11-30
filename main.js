@@ -105,18 +105,28 @@ function abbrToSnakeCase(state) {
 }
 
 function displayBrewInfo(response) {
+  console.log(response);
   $('#h1-options').text(`Options`);
   //append names of each brewery to display
-  response.forEach((event, index) => {
-    console.log(response);
-    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${event.name}</li>`),
+  response.forEach((brewery, index) => {
+  // add an if statement so the breweries only post to the page if they have a street address stored in API
+    if (brewery.street === "") {
+
+    } else {
+    $('#ul-options').append(`<li id="display-${index}" class="brew-li">${brewery.name}</li>`),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
       $('#ul-options').on('click', '#display-' + index, function() {
         $('#details-div').empty();
-        $('#details-div').append(`<div><ul><li> ${event.city}, ${event.state}</li>
-      <li>${event.brewery_type} brewery </li>
-      <li>${event.website_url}</ul></div>`);
+        let streetAddress = brewery.street.split(' ').join('+');
+        let brewCity= brewery.city.split(' ').join('+');
+        $('#details-div').append(`<div><ul><li>${brewery.name}</li>
+       <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">${brewery.street}</li>
+        <li> ${brewery.city}, ${brewery.state}</li></a>
+      <li>${brewery.brewery_type} brewery </li>
+      <li><a href="${brewery.website_url}">Website</a></li>
+      </ul></div>`);
       });
+    }
   });
 }
 
