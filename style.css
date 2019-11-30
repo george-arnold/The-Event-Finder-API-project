@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 body {
-  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(https://skysprout.com/wp-content/uploads/2018/09/expansion-background-crowd-event-marketing.jpg); 
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://skysprout.com/wp-content/uploads/2018/09/expansion-background-crowd-event-marketing.jpg'); 
   background-attachment: fixed;
   color:rgb(201, 200, 200);
 }
