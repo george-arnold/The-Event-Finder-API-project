@@ -12,7 +12,7 @@ function displayTicketMasterInfo(response) {
       event.info = 'No additional information was provided by the event manager';
     }
     $('#ul-options').append(
-      `<li id="display-${index}" class="brew-li">${event.name}, Date: ${event.dates.start.localDate}</li>`
+      `<li id="display-${index}" class="options-li">${event.name}, Date: ${event.dates.start.localDate}</li>`
     ),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
       $('#ul-options').on('click', '#display-' + index, function() {
@@ -23,11 +23,11 @@ function displayTicketMasterInfo(response) {
         $('#details-div').empty();
         $('#details-div').append(`<div><ul> <li>${event.name}</li>
         <li>Date: ${event.dates.start.localDate}</li>
-        <li> ${venue.name} </li>
+        <li><a target= "_blank" href="${venue.url}"> ${venue.name} </a></li>
         <li><a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddressVenue}%2C+${venueCity}"> 
         ${venue.address.line1}, ${venue.city.name}, ${venue.state.name}</a></li>
         <li>${event.info}</li>
-        <li><a href="${event.url}">${event.url}</a></li></ul></div>`);
+        <li><a target="_blank" href="${event.url}">Click here to find tickets</a></li></ul></div>`);
       });
   });
 }
@@ -126,7 +126,7 @@ function displayBrewInfo(response) {
     // add an if statement so the breweries only post to the page if they have a street address stored in API
     if (brewery.street === '') {
     } else {
-      $('#ul-options').append(`<li id="display-${index}" class="brew-li">${brewery.name}</li>`),
+      $('#ul-options').append(`<li id="display-${index}" class="options-li">${brewery.name}</li>`),
         // add click listener that allows us to get additional information about each <li> by clicking on each <li>
         $('#ul-options').on('click', '#display-' + index, function() {
           $('#details-div').empty();
