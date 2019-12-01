@@ -11,7 +11,7 @@ function displayTicketMasterInfo(response) {
     }
     // append each user option in a li
     $('#ul-options').append(
-      `<li id="display-${index}" class="options-li">${event.name}, Date: ${event.dates.start.localDate}</li>`
+      `<li id="display-${index}" class="options-li">${event.name} <span>Date: ${event.dates.start.localDate}</span></li>`
     ),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
       $('#ul-options').on('click', '#display-' + index, function() {
@@ -21,9 +21,8 @@ function displayTicketMasterInfo(response) {
         const venueCity = venue.city.name.split(' ').join('+');
         // clears details and adds them after item clicked
         $('#details-div').remove();
-        $(this).after(`<div id=details-div> <ul> <li>${event.name}</li>
-        <li>Date: ${event.dates.start.localDate}</li>
-        <li><a target= "_blank" href="${venue.url}"> ${venue.name} </a></li>
+        $(this).after(`<div id=details-div> <ul> 
+        <li> Venue Name: <a target= "_blank" href="${venue.url}">${venue.name} </a></li>
         <li><a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddressVenue}%2C+${venueCity}"> 
         ${venue.address.line1}, ${venue.city.name}, ${venue.state.name}</a></li>
         <li>${event.info}</li>
