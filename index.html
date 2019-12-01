@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Get Out of Your Bubble</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
   <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -15,8 +17,9 @@
   <main>
 
     <h1>Get Out of Your Bubble</h1>
-    <h2> Looking to travel outside of your hometown and explore something new? </h2>
+    <h2>Travel outside of your hometown and explore something new! </h2>
     <form id='user-input'>
+   
     <label for='state'>Where do you live? </label>
     <select class= "select-css" id="state-input">
         <option value="MD">Maryland</option>
@@ -71,8 +74,8 @@
         <option value="WI">Wisconsin</option>
         <option value="WY">Wyoming</option>
       </select>				
-        
-    <label for='event-type'>What kind of activity are you looking for? </label>
+
+    <label for='event-type'>What activity are you looking for? </label>
     <select class="select-css" id='event-type'>
         <option value="Music">Music</option>  
         <option value="visit-breweries">Visit Breweries</option>
@@ -81,16 +84,17 @@
       </select>
     <input class="submit-button" type='submit' for ='user-input'>
     </form>
-</main>
 
-    </form>
+</main>
+<button class="back-button hidden">
+    <i></i>
+    <span>Back</span>
+  </button>
     <div class="display-options">
       <h1 id="h1-options"></h1>
       <ul id="ul-options"></ul>
     </div>
-    <div id="details-div">
 
-    </div>
     
   <script src='main.js'></script>
 </body>

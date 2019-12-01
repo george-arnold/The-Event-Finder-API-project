@@ -1,16 +1,15 @@
 // Access API
 'use strict';
 
-function displayTicketMasterInfo(response) {
-  //clear out for each load
 
-  $('#h1-options').text(`Options`);
-  //append names of each brewery to display
-  console.log(response);
+function displayTicketMasterInfo(response) {
+  //append names and date of each event to display
   response.forEach((event, index) => {
+    // catch any event that does not list additional information and create a default key-value
     if (event.info === undefined) {
       event.info = 'No additional information was provided by the event manager';
     }
+    // append each user option in a li
     $('#ul-options').append(
       `<li id="display-${index}" class="options-li">${event.name}, Date: ${event.dates.start.localDate}</li>`
     ),
@@ -20,8 +19,9 @@ function displayTicketMasterInfo(response) {
         // remove spaces and add + so that google maps link will function correctly
         const streetAddressVenue = venue.address.line1.split(' ').join('+');
         const venueCity = venue.city.name.split(' ').join('+');
-        $('#details-div').empty();
-        $('#details-div').append(`<div><ul> <li>${event.name}</li>
+        // clears details and adds them after item clicked
+        $('#details-div').remove();
+        $(this).after(`<div id=details-div> <ul> <li>${event.name}</li>
         <li>Date: ${event.dates.start.localDate}</li>
         <li><a target= "_blank" href="${venue.url}"> ${venue.name} </a></li>
         <li><a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddressVenue}%2C+${venueCity}"> 
@@ -119,20 +119,19 @@ function abbrToSnakeCase(state) {
 }
 
 function displayBrewInfo(response) {
-  console.log(response);
-  $('#h1-options').text(`Options`);
   //append names of each brewery to display
   response.forEach((brewery, index) => {
     // add an if statement so the breweries only post to the page if they have a street address stored in API
     if (brewery.street === '') {
     } else {
-      $('#ul-options').append(`<li id="display-${index}" class="options-li">${brewery.name}</li>`),
+      $('#ul-options').append(
+        `<li id="display-${index}" class="options-li">${brewery.name}</li>`),
         // add click listener that allows us to get additional information about each <li> by clicking on each <li>
         $('#ul-options').on('click', '#display-' + index, function() {
-          $('#details-div').empty();
           let streetAddress = brewery.street.split(' ').join('+');
           let brewCity = brewery.city.split(' ').join('+');
-          $('#details-div').append(`<div><ul><li>${brewery.name}</li>
+          $('#details-div').remove();
+          $(this).after(`<div id='details-div'><ul><li>${brewery.name}</li>
         <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
         ${brewery.street}, ${brewery.city}, ${brewery.state}</a></li>
       <li>${brewery.brewery_type} brewery </li>
@@ -152,9 +151,20 @@ function getBreweryInfo() {
     .catch(error => alert('Something went wrong. Try again later.'));
 }
 
-function submitForm() {
+
+function setUpSecondScreen() {
   $('main').addClass('hidden');
-  console.log($('#event-type'));
+  $('.display-options, #details-div, .back-button').removeClass('hidden');
+  $('#h1-options, #ul-options').empty();
+  $('#h1-options').text(`Options`);
+  $('.back-button').on('click', function() {
+    $('main').removeClass('hidden');
+    $('.display-options, #details-div, .back-button').addClass('hidden');
+  });
+}
+
+function submitForm() {
+  setUpSecondScreen();
   if ($('#event-type').val() === 'visit-breweries') {
     getBreweryInfo();
   } else {
