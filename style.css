@@ -1,13 +1,27 @@
+/* global rules */
 * {
   box-sizing: border-box;
 }
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://skysprout.com/wp-content/uploads/2018/09/expansion-background-crowd-event-marketing.jpg'); 
   background-attachment: fixed;
-  color:rgb(201, 200, 200);
+  color:rgb(201, 200, 200); 
   font-family: 'Montserrat', sans-serif;
-
 }
+.hidden {
+  display: none;
+ } 
+h1 {
+  margin: 20px 0;
+  text-align:center;
+  font-size: 36px;
+}
+h2 {
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+/* affect first page */
 main {
   display: flex;
   flex-direction: column;
@@ -19,23 +33,6 @@ form {
   text-align:left;
   margin-top: 20px;
 }
-
-
-.hidden {
- display: none;
-}
-h1 {
-  margin: 20px 0;
-  text-align:center;
-  font-size: 36px;
-}
-h2 {
-  margin: 20px 0;
-  font-size: 18px;
-  text-align: left;
-}
-
-
 .submit-button {
   background-color:transparent;
   padding: 20px;
@@ -53,14 +50,11 @@ h2 {
   display: block;
   margin: 0 auto;
   margin-top:40px;
-
 }
-
 .submit-button:hover {
   background-color: rgb(66,139,202);
   color:black;
 }
-/* style the state selector*/
 .select-css {
 	display: block;
 	font-size: 16px;
@@ -85,14 +79,14 @@ h2 {
 	background-position: right .7em top 50%, 0 0;
 	background-size: .65em auto, 100%;
 }
-.select-css::-ms-expand {
-	display: none;
+.select-css:focus {
+  outline:none;
 }
-
 .select-css option {
 	font-weight:normal;
 }
-/*creates the back arrow */
+/* second page*/
+/* the back arrow */
 i {
   border: solid rgb(66,139,202);
   border-width: 0 3px 3px 0;
@@ -101,7 +95,6 @@ i {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
-
 .back-button {
   background: transparent;
   border: 3px solid rgb(66,139,202);
@@ -115,8 +108,7 @@ i {
   color:rgb(201, 200, 200);
 }
 
-/* edits the options list */
-
+/* styles the options list printed */
 ul {
   list-style-type: none;
   padding: 0;
@@ -127,6 +119,7 @@ ul {
   padding: 10px;
   margin: 10px;
 }
+
 .options-li:hover {
  color:rgb(66,139,202);
  cursor: pointer;
@@ -136,8 +129,16 @@ ul {
   display: block;
   margin-top: 5px;
 }
+.venue-name {
+  font-size:20px;
+  text-decoration: none;
+  color:rgb(201, 200, 200);
+}
+/*styles the additional details that pop up*/
 #details-div {
   padding: 10px;
+  border-left: 1px solid white;
+  margin-left: 20px;
 }
 
 #details-div li {
@@ -145,5 +146,5 @@ margin-bottom: 10px;
 }
 
 a {
-  color: rgb(133,174,210)
+  color: rgb(133,174,210);
 }

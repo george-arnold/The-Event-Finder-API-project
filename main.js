@@ -3,6 +3,7 @@
 
 
 function displayTicketMasterInfo(response) {
+  $('#h1-options').text(`Events`);
   //append names and date of each event to display
   response.forEach((event, index) => {
     // catch any event that does not list additional information and create a default key-value
@@ -22,11 +23,11 @@ function displayTicketMasterInfo(response) {
         // clears details and adds them after item clicked
         $('#details-div').remove();
         $(this).after(`<div id=details-div> <ul> 
-        <li> Venue Name: <a target= "_blank" href="${venue.url}">${venue.name} </a></li>
+        <li class="venue-name">${venue.name} </li>
         <li><a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddressVenue}%2C+${venueCity}"> 
-        ${venue.address.line1}, ${venue.city.name}, ${venue.state.name}</a></li>
+         ${venue.address.line1}, ${venue.city.name}, ${venue.state.name}</a></li>
         <li>${event.info}</li>
-        <li><a target="_blank" href="${event.url}">Click here to find tickets</a></li></ul></div>`);
+        <li><a target="_blank" href="${event.url}">Tickets</a> | <a target= "_blank" href="${venue.url}">Venue </a> </li></ul></div>`);
       });
   });
 }
@@ -118,6 +119,7 @@ function abbrToSnakeCase(state) {
 }
 
 function displayBrewInfo(response) {
+  $('#h1-options').text(`Breweries`);
   //append names of each brewery to display
   response.forEach((brewery, index) => {
     // add an if statement so the breweries only post to the page if they have a street address stored in API
@@ -130,8 +132,8 @@ function displayBrewInfo(response) {
           let streetAddress = brewery.street.split(' ').join('+');
           let brewCity = brewery.city.split(' ').join('+');
           $('#details-div').remove();
-          $(this).after(`<div id='details-div'><ul><li>${brewery.name}</li>
-        <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
+          $(this).after(`<div id='details-div'><ul><li class="venue-name">${brewery.name}</li>
+        <li <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
         ${brewery.street}, ${brewery.city}, ${brewery.state}</a></li>
       <li>${brewery.brewery_type} brewery </li>
       <li><a href="${brewery.website_url}">${brewery.website_url}</a></li>
@@ -155,7 +157,6 @@ function setUpSecondScreen() {
   $('main').addClass('hidden');
   $('.display-options, #details-div, .back-button').removeClass('hidden');
   $('#h1-options, #ul-options').empty();
-  $('#h1-options').text(`Options`);
   $('.back-button').on('click', function() {
     $('main').removeClass('hidden');
     $('.display-options, #details-div, .back-button').addClass('hidden');
