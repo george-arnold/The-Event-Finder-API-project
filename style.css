@@ -148,3 +148,35 @@ margin-bottom: 10px;
 a {
   color: rgb(133,174,210);
 }
+
+/*(landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  form {
+    width: 752px;
+  }
+  .submit-button {
+    margin-top: 50px;
+  }
+  .back-button{
+    width: 225px;
+  }
+  .display-options li {
+    width: 732px;
+    margin: 10px auto;
+  }
+  #details-div {
+  width: 720px;
+  margin: 10px auto;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .submit-button {
+    margin-top: 60px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}
