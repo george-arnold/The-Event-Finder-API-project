@@ -30,7 +30,7 @@ function displayTicketMasterInfo(response) {
       });
   });
 }
-
+//gets info from Ticketmaster API
 function getTickerMasterInfo() {
   let stateInput = $('#state-input').val();
   let classificationInput = $('#event-type').val();
@@ -126,17 +126,18 @@ function displayBrewInfo(response) {
     } else {
       $('#ul-options').append(`<li id="display-${index}" class="options-li">${brewery.name}</li>`),
         // add click listener that allows us to get additional information about each <li> by clicking on each <li>
-        $('#ul-options').on('click', '#display-' + index, function() {
-          let streetAddress = brewery.street.split(' ').join('+');
-          let brewCity = brewery.city.split(' ').join('+');
-          $('#details-div').remove();
-          $(this).after(`<div id='details-div'><ul><li class="venue-name">${brewery.name}</li>
-        <li <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
+      $('#ul-options').on('click', '#display-' + index, function() {
+        let streetAddress = brewery.street.split(' ').join('+');
+        let brewCity = brewery.city.split(' ').join('+');
+        $('#details-div').remove();
+        $(this).after(`<div id='details-div'><ul><li class="venue-name">${brewery.name}</li>
+        <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
         ${brewery.street}, ${brewery.city}, ${brewery.state}</a></li>
-      <li>${brewery.brewery_type} brewery </li>
-      <li><a href="${brewery.website_url}">${brewery.website_url}</a></li>
-      </ul></div>`);
-        });
+        <li class="capitalize">${brewery.brewery_type} Brewery </li>
+        <li><a href="${brewery.website_url}">${brewery.website_url}</a></li>
+        </ul></div>`
+        );
+      });
     }
   });
 }
@@ -160,19 +161,17 @@ function setUpSecondScreen() {
   });
 }
 
-function submitForm() {
-  setUpSecondScreen();
-  if ($('#event-type').val() === 'visit-breweries') {
-    getBreweryInfo();
-  } else {
-    getTickerMasterInfo();
-  }
-}
+
 
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    submitForm();
+    setUpSecondScreen();
+    if ($('#event-type').val() === 'visit-breweries') {
+      getBreweryInfo();
+    } else {
+      getTickerMasterInfo();
+    }
   });
 }
 

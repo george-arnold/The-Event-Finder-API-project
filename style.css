@@ -123,14 +123,13 @@ ul {
   border: 1px solid white;
   border-radius: 20px;
   padding: 10px;
+  padding-left:20px;
   margin: 10px;
 }
-
 .options-li:hover {
   color: rgb(66, 139, 202);
   cursor: pointer;
 }
-
 .options-li span {
   display: block;
   margin-top: 5px;
@@ -146,15 +145,15 @@ ul {
   border-left: 1px solid white;
   margin-left: 20px;
 }
-
+.capitalize {
+  text-transform: capitalize;
+}
 #details-div li {
   margin-bottom: 10px;
 }
-
 a {
   color: rgb(133, 174, 210);
 }
-
 /*(landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   form {
@@ -181,7 +180,6 @@ a {
     margin-top: 60px;
   }
 }
-
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 }
