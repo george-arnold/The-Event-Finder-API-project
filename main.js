@@ -1,7 +1,6 @@
 // Access API
 'use strict';
 
-
 function displayTicketMasterInfo(response) {
   $('#h1-options').text(`Events`);
   //append names and date of each event to display
@@ -125,8 +124,7 @@ function displayBrewInfo(response) {
     // add an if statement so the breweries only post to the page if they have a street address stored in API
     if (brewery.street === '') {
     } else {
-      $('#ul-options').append(
-        `<li id="display-${index}" class="options-li">${brewery.name}</li>`),
+      $('#ul-options').append(`<li id="display-${index}" class="options-li">${brewery.name}</li>`),
         // add click listener that allows us to get additional information about each <li> by clicking on each <li>
         $('#ul-options').on('click', '#display-' + index, function() {
           let streetAddress = brewery.street.split(' ').join('+');
@@ -151,7 +149,6 @@ function getBreweryInfo() {
     .then(responseJson => displayBrewInfo(responseJson))
     .catch(error => alert('Something went wrong. Try again later.'));
 }
-
 
 function setUpSecondScreen() {
   $('main').addClass('hidden');
