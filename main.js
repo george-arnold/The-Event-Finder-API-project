@@ -4,14 +4,17 @@
 function displayTicketMasterInfo(response) {
   $('#h1-options').text(`Events`);
   //append names and date of each event to display
+    //take the date strings and change the formatting with moment.js
+ 
   response.forEach((event, index) => {
+    let date = moment(event.dates.start.localDate,"YYYY-MM-DD").format('MMMM Do YYYY');
     // catch any event that does not list additional information and create a default key-value
     if (event.info === undefined) {
       event.info = 'No additional information was provided by the event manager';
     }
     // append each user option in a li
     $('#ul-options').append(
-      `<li id="display-${index}" class="options-li">${event.name} <span>Date: ${event.dates.start.localDate}</span></li>`
+      `<li id="display-${index}" class="options-li">${event.name}<span>${date}</span></li>`
     ),
       // add click listener that allows us to get additional information about each <li> by clicking on each <li>
       $('#ul-options').on('click', '#display-' + index, function() {
@@ -122,8 +125,7 @@ function displayBrewInfo(response) {
   //append names of each brewery to display
   response.forEach((brewery, index) => {
     // add an if statement so the breweries only post to the page if they have a street address stored in API
-    if (brewery.street === '') {
-    } else {
+    if (brewery.street !== '') {
       $('#ul-options').append(`<li id="display-${index}" class="options-li">${brewery.name}</li>`),
         // add click listener that allows us to get additional information about each <li> by clicking on each <li>
         $('#ul-options').on('click', '#display-' + index, function() {

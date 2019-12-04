@@ -98,7 +98,8 @@ i {
   -webkit-transform: rotate(135deg);
 }
 .back-button {
-  background: transparent;
+  background: black;
+  position:fixed;
   border: 3px solid rgb(66, 139, 202);
   border-radius: 20px;
   padding: 10px;
