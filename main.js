@@ -7,7 +7,7 @@ function displayTicketMasterInfo(response) {
     //take the date strings and change the formatting with moment.js
  
   response.forEach((event, index) => {
-    let date = moment(event.dates.start.localDate,"YYYY-MM-DD").format('MMMM Do YYYY');
+    let date = moment(event.dates.start.localDate,"YYYY-MM-DD").format('MMMM Do, YYYY');
     // catch any event that does not list additional information and create a default key-value
     if (event.info === undefined) {
       event.info = 'No additional information was provided by the event manager';
