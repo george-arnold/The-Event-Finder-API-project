@@ -126,18 +126,17 @@ function displayBrewInfo(response) {
     } else {
       $('#ul-options').append(`<li id="display-${index}" class="options-li">${brewery.name}</li>`),
         // add click listener that allows us to get additional information about each <li> by clicking on each <li>
-      $('#ul-options').on('click', '#display-' + index, function() {
-        let streetAddress = brewery.street.split(' ').join('+');
-        let brewCity = brewery.city.split(' ').join('+');
-        $('#details-div').remove();
-        $(this).after(`<div id='details-div'><ul><li class="venue-name">${brewery.name}</li>
+        $('#ul-options').on('click', '#display-' + index, function() {
+          let streetAddress = brewery.street.split(' ').join('+');
+          let brewCity = brewery.city.split(' ').join('+');
+          $('#details-div').remove();
+          $(this).after(`<div id='details-div'><ul><li class="venue-name">${brewery.name}</li>
         <li> <a target="_blank" href= "https://www.google.com/maps/search/?api=1&query=${streetAddress}%2C+${brewCity}">
         ${brewery.street}, ${brewery.city}, ${brewery.state}</a></li>
         <li class="capitalize">${brewery.brewery_type} Brewery </li>
         <li><a href="${brewery.website_url}">${brewery.website_url}</a></li>
-        </ul></div>`
-        );
-      });
+        </ul></div>`);
+        });
     }
   });
 }
@@ -160,8 +159,6 @@ function setUpSecondScreen() {
     $('.display-options, #details-div, .back-button').addClass('hidden');
   });
 }
-
-
 
 function watchForm() {
   $('form').submit(event => {
